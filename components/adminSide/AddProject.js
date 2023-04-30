@@ -1,33 +1,58 @@
 import { useState } from "react";
 import { database } from "../../firebaseconfig";
-// import { collection, addDoc } from 'firebase/firestore';
-import { doc, setDoc } from "firebase/firestore";
-import Link from "next/link";
-// const dbInstance = collection(database, 'store product', "Stone");
-const AddProject = () => {
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { useRouter } from "next/router";
+
+const AddProject = ({ projectData }) => {
   const [projectId, setProjectId] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectType, setProjectType] = useState("");
   const [projectAmount, setProjectAmount] = useState(0);
-
-  // const id = Math.floor((Math.random() * 1000) + 1);
+  const router = useRouter();
   const onHandleSubmit = (event) => {
     event.preventDefault();
-    try {
-      setDoc(doc(database, "store project", `${projectId}`), {
-        project_Id: projectId,
-        project_Name: projectName,
-        project_Type: projectType,
-        project_Amount: projectAmount,
-      }).then(() => {
-        console.log("store successfully");
-        setProjectId("");
-        setProjectName("");
-        setProjectType("");
-        setProjectAmount("");
-      });
-    } catch (error) {
-      console.log(error);
+    if (!projectData?.project_Id) {
+      try {
+        setDoc(doc(database, "store project", `${projectId}`), {
+          project_Id: projectId,
+          project_Name: projectName,
+          project_Type: projectType,
+          project_Amount: projectAmount,
+        }).then(() => {
+          console.log("store successfully");
+          setProjectId("");
+          setProjectName("");
+          setProjectType("");
+          setProjectAmount("");
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        updateDoc(
+          doc(
+            database,
+            "store project",
+            `${projectId || projectData?.project_Id}`
+          ),
+          {
+            project_Id: projectId || projectData?.project_Id,
+            project_Name: projectName || projectData?.project_Name,
+            project_Type: projectType || projectData?.project_Type,
+            project_Amount: projectAmount || projectData?.project_Amount,
+          }
+        ).then(() => {
+          console.log("store successfully");
+          router.push("/adminPage");
+          setProjectId("");
+          setProjectName("");
+          setProjectType("");
+          setProjectAmount("");
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
@@ -49,7 +74,7 @@ const AddProject = () => {
                 className="bg-gray-300 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-full-name"
                 type="text"
-                value={projectId}
+                value={projectId || projectData?.project_Id}
                 onChange={(e) => setProjectId(e.target.value)}
               />
             </div>
@@ -68,7 +93,7 @@ const AddProject = () => {
                 className="bg-gray-300 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-full-name"
                 type="text"
-                value={projectName}
+                value={projectName || projectData?.project_Name}
                 onChange={(e) => setProjectName(e.target.value)}
               />
             </div>
@@ -88,7 +113,7 @@ const AddProject = () => {
                 className="bg-gray-300 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-password"
                 type="text"
-                value={projectType}
+                value={projectType || projectData?.project_Type}
                 onChange={(e) => setProjectType(e.target.value)}
               />
             </div>
@@ -107,7 +132,7 @@ const AddProject = () => {
                 className="bg-gray-300 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="inline-password"
                 type="text"
-                value={projectAmount}
+                value={projectAmount || projectData?.project_Amount}
                 onChange={(e) => setProjectAmount(e.target.value)}
               />
             </div>
@@ -120,7 +145,7 @@ const AddProject = () => {
                 className="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
                 type="submit"
               >
-                CREATE
+                {!projectData?.project_Id ? "CREATE" : "UPDATE"}
               </button>
             </div>
           </div>

@@ -3,9 +3,12 @@ import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
 import { doc, deleteDoc } from "firebase/firestore";
 import { database } from "../../firebaseconfig";
+import { useRouter } from "next/router";
 const Dashboard = () => {
   const [memberData, setMemberData] = useState([]);
   const [projectData, setProjectData] = useState([]);
+
+  const router = useRouter();
 
   const getMemberData = async () => {
     getDocs(collection(database, "store member")).then((querySnapshot) => {
@@ -19,28 +22,6 @@ const Dashboard = () => {
       setProjectData(data);
     });
   };
-  // const getConsultData = async () => {
-  //   getDocs(collection(database, "Consult requests")).then((querySnapshot) => {
-  //     const data = querySnapshot.docs.map((doc) => doc.data());
-  //     setConsultData(data);
-  //   });
-  // };
-  // const getReportData = async () => {
-  //   getDocs(collection(database, "Report Generate request")).then(
-  //     (querySnapshot) => {
-  //       const data = querySnapshot.docs.map((doc) => doc.data());
-  //       setReportData(data);
-  //     }
-  //   );
-  // };
-  // const getTransactionData = async () => {
-  //   getDocs(collection(database, "Shop Transaction Details")).then(
-  //     (querySnapshot) => {
-  //       const data = querySnapshot.docs.map((doc) => doc.data());
-  //       setTransaction(data);
-  //     }
-  //   );
-  // };
 
   const deleteMember = async (id) => {
     await deleteDoc(doc(database, "store member", id));
@@ -83,12 +64,14 @@ const Dashboard = () => {
                 <tr className="" key={s.member_Id}>
                   <td>{s.member_Id}</td>
                   <td>{s.member_Name}</td>
-                  <td>{s.degisnation}</td>
+                  <td>{s.designation}</td>
                   <td>{s.type}</td>
                   <td>
                     <button
                       className="btn bg-yellow-600 border-none hover:bg-yellow-500"
-                      onClick={() => deleteMember(s.member_Id)}
+                      onClick={() =>
+                        router.push(`/adminPage/member-add/${s.member_Id}`)
+                      }
                     >
                       EDIT
                     </button>
@@ -112,6 +95,7 @@ const Dashboard = () => {
 };
 
 const Table = ({ title, dataArr }) => {
+  const router = useRouter();
   const deleteProject = async (id) => {
     await deleteDoc(doc(database, "store project", id));
   };
@@ -138,7 +122,12 @@ const Table = ({ title, dataArr }) => {
                 <td>{s.project_Type}</td>
                 <td>{s.project_Amount}</td>
                 <td>
-                  <button className="btn bg-yellow-600 border-none hover:bg-yellow-500">
+                  <button
+                    className="btn bg-yellow-600 border-none hover:bg-yellow-500"
+                    onClick={() =>
+                      router.push(`/adminPage/project-add/${s.project_Id}`)
+                    }
+                  >
                     EDIT
                   </button>
                 </td>
