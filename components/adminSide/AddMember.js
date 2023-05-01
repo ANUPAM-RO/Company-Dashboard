@@ -57,7 +57,7 @@ const AddMember = ({ memberData }) => {
   return (
     <div className="flex justify-center items-center w-full h-screen">
       <div className=" text-center">
-        <p className="text-3xl font-bold pb-10 ">ADD PRODUCT</p>
+        <p className="text-3xl font-bold pb-10 ">ADD MEMBER</p>
         <form className="w-full max-w-sm" onSubmit={onHandleSubmit}>
           <div className="md:flex md:items-center mb-6">
             <div className="md:w-1/3">
