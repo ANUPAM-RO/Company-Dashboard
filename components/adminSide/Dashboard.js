@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 const Dashboard = () => {
   const [memberData, setMemberData] = useState([]);
   const [projectData, setProjectData] = useState([]);
+  const [shareData, setShareData] = useState([]);
 
   const router = useRouter();
 
@@ -22,6 +23,12 @@ const Dashboard = () => {
       setProjectData(data);
     });
   };
+  const getShareData = async () => {
+    getDocs(collection(database, "share percentage")).then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      setShareData(data);
+    });
+  };
 
   const deleteMember = async (id) => {
     await deleteDoc(doc(database, "store member", id));
@@ -30,6 +37,7 @@ const Dashboard = () => {
   useEffect(() => {
     getMemberData();
     getProjectData();
+    getShareData();
   }, [memberData, projectData]);
   return (
     <div>
@@ -43,6 +51,35 @@ const Dashboard = () => {
         <Link href="/adminPage/project-add">
           <button className="btn btn-secondary">Add Project</button>
         </Link>
+      </div>
+      <div className="overflow-x-auto">
+        <div className="text-center font-bold text-xl pb-4">Percentage</div>
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Share percentage</th>
+              <th>EDIT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!!shareData.length &&
+              shareData?.map((s) => (
+                <tr className="" key={s.id}>
+                  <td>{s.id}</td>
+                  <td>{s.percentage}</td>
+                  <td>
+                    <button
+                      className="btn bg-yellow-600 border-none hover:bg-yellow-500"
+                      onClick={() => router.push(`/adminPage//${s.id}`)}
+                    >
+                      EDIT
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
 
       <div className="overflow-x-auto">

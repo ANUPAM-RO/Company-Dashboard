@@ -6,6 +6,7 @@ import Department from "./Department";
 const MainBody = () => {
   const [memberData, setMemberData] = useState([]);
   const [projectData, setProjectData] = useState([]);
+  const [shareData, setShareData] = useState([]);
 
   const getMemberData = async () => {
     getDocs(collection(database, "store member")).then((querySnapshot) => {
@@ -19,6 +20,12 @@ const MainBody = () => {
       setProjectData(data);
     });
   };
+  const getShareData = async () => {
+    getDocs(collection(database, "share percentage")).then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      setShareData(data);
+    });
+  };
   const currentProjects = projectData?.filter(
     (data) => data?.project_Type === "current"
   );
@@ -28,6 +35,7 @@ const MainBody = () => {
   useEffect(() => {
     getMemberData();
     getProjectData();
+    getShareData();
   }, []);
   return (
     <div>
@@ -42,7 +50,10 @@ const MainBody = () => {
               <span className="text-green-800 font-bold pl-2">XYZ</span>
             </p>
             <p className="text-xl text-purple-800">
-              Share Persentage : <span className="text-amber-800">50%</span>
+              Share Persentage :
+              <span className="text-amber-800">
+                {shareData[0]?.percentage}%
+              </span>
             </p>
           </div>
         </div>
@@ -53,7 +64,10 @@ const MainBody = () => {
               <span className="text-green-800 font-bold pl-2">XYZ</span>
             </p>
             <p className="text-xl text-purple-800">
-              Share Persentage : <span className="text-amber-800">50%</span>
+              Share Persentage :
+              <span className="text-amber-800">
+                {shareData[1]?.percentage}%
+              </span>
             </p>
           </div>
         </div>
@@ -63,7 +77,7 @@ const MainBody = () => {
       </div>
       <div>
         <p className="text-xl font-bold text-red-700 p-4">Previous Projects:</p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className=" grid grid-cols-3 md:grid-cols-2 gap-4 ">
           {!!previousProjects?.length &&
             previousProjects?.map((data) => (
               <div className="card w-96 bg-neutral text-neutral-content m-4">
@@ -85,7 +99,7 @@ const MainBody = () => {
             ))}
         </div>
         <p className="text-xl font-bold text-red-700 p-4">Current Projects:</p>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
           {!!currentProjects?.length &&
             currentProjects?.map((data) => (
               <div className="card w-96 bg-neutral text-neutral-content m-4">
