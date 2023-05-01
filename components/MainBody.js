@@ -129,8 +129,8 @@ const MainBody = () => {
             ))}
         </div>
       </div>
-      <div className="text-2xl font-bold text-yellow-700 flex justify-center pb-4 pt-4">
-        Notification
+      <div className="text-2xl font-bold text-orange-700 flex justify-center pb-4 pt-4">
+        Notifications
       </div>
       <div className="card w-11/12 bg-white text-neutral-content ml-4 mb-4">
         <div className="card-body">
