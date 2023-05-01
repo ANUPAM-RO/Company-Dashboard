@@ -6,7 +6,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const handleLogin = () => {
-    if (email === "admin@gmail.com" && password === "password") {
+    if (email === "hp502156@gmail.com" && password === "@XY349pq") {
       router.push("/home");
     }
   };

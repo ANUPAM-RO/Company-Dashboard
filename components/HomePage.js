@@ -8,7 +8,6 @@ const HomePage = () => {
     <div className="bg-blue-300 bg-[url('/picture.jpg')]">
       <Nav />
       <MainBody />
-      <Footer />
     </div>
   );
 };

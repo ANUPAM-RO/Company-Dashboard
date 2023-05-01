@@ -31,7 +31,7 @@ export default function Department({ memberData }) {
 
   return (
     <Tabs value="html">
-      <TabsHeader>
+      <TabsHeader className="mb-2">
         {data.map(({ label, value }) => (
           <Tab key={value} value={value}>
             {label}
