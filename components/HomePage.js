@@ -5,7 +5,7 @@ import MainBody from "./MainBody";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="bg-blue-300">
       <Nav />
       <MainBody />
       <Footer />
