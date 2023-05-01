@@ -7,6 +7,7 @@ const MainBody = () => {
   const [memberData, setMemberData] = useState([]);
   const [projectData, setProjectData] = useState([]);
   const [shareData, setShareData] = useState([]);
+  const [message, setMessage] = useState([]);
 
   const getMemberData = async () => {
     getDocs(collection(database, "store member")).then((querySnapshot) => {
@@ -26,6 +27,14 @@ const MainBody = () => {
       setShareData(data);
     });
   };
+  const getNotificationData = async () => {
+    getDocs(collection(database, "store notification")).then(
+      (querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        setMessage(data);
+      }
+    );
+  };
   const currentProjects = projectData?.filter(
     (data) => data?.project_Type === "current"
   );
@@ -36,36 +45,39 @@ const MainBody = () => {
     getMemberData();
     getProjectData();
     getShareData();
+    getNotificationData();
   }, []);
   return (
     <div>
       <div className="text-2xl font-bold text-green-800 flex justify-center pb-4 pt-4">
-        PERTNERS
+        Owners
       </div>
       <div className="flex justify-between">
-        <div className="card w-96 h-36 bg-lime-500 text-primary-content ml-2">
+        <div className="card w-96 h-36 bg-white text-primary-content ml-2">
           <div className="card-body">
-            <p className="text-xl text-cyan-700">
-              Partner Name :
-              <span className="text-green-800 font-bold pl-2">XYZ</span>
+            <p className="text-xl text-black">
+              Owner Name :
+              <span className="text-green-800 font-bold pl-2">Hriti Ghosh</span>
             </p>
-            <p className="text-xl text-purple-800">
+            <p className="text-xl text-black">
               Share Persentage :
-              <span className="text-amber-800">
+              <span className="text-amber-800 pl-2">
                 {shareData[0]?.percentage}%
               </span>
             </p>
           </div>
         </div>
-        <div className="card w-96 h-36 bg-lime-500 text-primary-content mr-2">
+        <div className="card w-96 h-36 bg-white text-primary-content mr-2">
           <div className="card-body">
-            <p className="text-xl text-cyan-700">
-              Partner Name :
-              <span className="text-green-800 font-bold pl-2">XYZ</span>
+            <p className="text-xl text-black">
+              Owner Name :
+              <span className="text-green-800 font-bold pl-2">
+                Debanshu Das
+              </span>
             </p>
-            <p className="text-xl text-purple-800">
+            <p className="text-xl text-black">
               Share Persentage :
-              <span className="text-amber-800">
+              <span className="text-amber-800 pl-2">
                 {shareData[1]?.percentage}%
               </span>
             </p>
@@ -73,24 +85,22 @@ const MainBody = () => {
         </div>
       </div>
       <div className="text-2xl font-bold text-red-500 flex justify-center pb-4 pt-4">
-        PROJECTS
+        Projects Minamata
       </div>
       <div>
         <p className="text-xl font-bold text-red-700 p-4">Previous Projects:</p>
         <div className=" grid grid-cols-3 md:grid-cols-2 gap-4 ">
           {!!previousProjects?.length &&
             previousProjects?.map((data) => (
-              <div className="card w-96 bg-neutral text-neutral-content m-4">
+              <div className="card w-96 bg-white text-neutral-content m-4">
                 <div className="card-body">
-                  <h2 className="card-title text-lime-400">
+                  <h2 className="card-title text-black">
                     Project name :
-                    <span className="text-emerald-500">
-                      {data?.project_Name}
-                    </span>
+                    <span className="text-green-500">{data?.project_Name}</span>
                   </h2>
-                  <p className="text-sky-400">
+                  <p className="text-black font-semibold">
                     Amount :
-                    <span className="text-cyan-400 font-medium pl-2">
+                    <span className="text-cyan-400 font-semibold pl-2">
                       {data?.project_Amount}
                     </span>
                   </p>
@@ -102,17 +112,15 @@ const MainBody = () => {
         <div className="grid grid-cols-2 xl:grid-cols-3 gap-4">
           {!!currentProjects?.length &&
             currentProjects?.map((data) => (
-              <div className="card w-96 bg-neutral text-neutral-content m-4">
+              <div className="card w-96 bg-white text-neutral-content m-4">
                 <div className="card-body">
-                  <h2 className="card-title text-lime-400">
+                  <h2 className="card-title text-black">
                     Project name :
-                    <span className="text-emerald-500">
-                      {data?.project_Name}
-                    </span>
+                    <span className="text-green-500">{data?.project_Name}</span>
                   </h2>
-                  <p className="text-sky-400">
+                  <p className="text-black font-semibold">
                     Amount :
-                    <span className="text-cyan-400 font-medium pl-2">
+                    <span className="text-cyan-400 font-semibold  pl-2">
                       {data?.project_Amount}
                     </span>
                   </p>
@@ -122,7 +130,18 @@ const MainBody = () => {
         </div>
       </div>
       <div className="text-2xl font-bold text-yellow-700 flex justify-center pb-4 pt-4">
-        DEPARTMENT
+        Notification
+      </div>
+      <div className="card w-11/12 bg-white text-neutral-content ml-4 mb-4">
+        <div className="card-body">
+          {!!message?.length &&
+            message?.map((data) => (
+              <h2 className="card-title text-black">{data?.message}</h2>
+            ))}
+        </div>
+      </div>
+      <div className="text-2xl font-bold text-yellow-700 flex justify-center pb-4 pt-4">
+        Employee list with details
       </div>
       <Department memberData={memberData} />
     </div>

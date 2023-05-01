@@ -51,6 +51,9 @@ const Dashboard = () => {
         <Link href="/adminPage/project-add">
           <button className="btn btn-secondary">Add Project</button>
         </Link>
+        <Link href="/adminPage/notification-add">
+          <button className="btn btn-secondary">Add Notification</button>
+        </Link>
       </div>
       <div className="overflow-x-auto">
         <div className="text-center font-bold text-xl pb-4">Percentage</div>
