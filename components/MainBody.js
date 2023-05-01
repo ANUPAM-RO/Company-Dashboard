@@ -49,7 +49,7 @@ const MainBody = () => {
   }, []);
   return (
     <div>
-      <div className="text-2xl font-bold text-green-800 flex justify-center pb-4 pt-4">
+      <div className="text-2xl font-bold text-green-500 flex justify-center pb-4 pt-4">
         Owners
       </div>
       <div className="flex justify-between">
