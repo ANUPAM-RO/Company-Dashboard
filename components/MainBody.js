@@ -31,20 +31,30 @@ const MainBody = () => {
   }, []);
   return (
     <div>
-      <div className="text-2xl font-bold text-green-500 flex justify-center pb-4 pt-4">
+      <div className="text-2xl font-bold text-green-800 flex justify-center pb-4 pt-4">
         PERTNERS
       </div>
       <div className="flex justify-between">
-        <div className="card w-96 h-36 bg-primary text-primary-content ml-2">
+        <div className="card w-96 h-36 bg-lime-500 text-primary-content ml-2">
           <div className="card-body">
-            <p className="text-xl">Partner Name : XYZ</p>
-            <p className="text-xl">Share Persentage : 50%</p>
+            <p className="text-xl text-cyan-700">
+              Partner Name :
+              <span className="text-green-800 font-bold pl-2">XYZ</span>
+            </p>
+            <p className="text-xl text-purple-800">
+              Share Persentage : <span className="text-amber-800">50%</span>
+            </p>
           </div>
         </div>
-        <div className="card w-96 h-36 bg-primary text-primary-content mr-2">
+        <div className="card w-96 h-36 bg-lime-500 text-primary-content mr-2">
           <div className="card-body">
-            <p className="text-xl">Partner Name : XYZ</p>
-            <p className="text-xl">Share Persentage : 50%</p>
+            <p className="text-xl text-cyan-700">
+              Partner Name :
+              <span className="text-green-800 font-bold pl-2">XYZ</span>
+            </p>
+            <p className="text-xl text-purple-800">
+              Share Persentage : <span className="text-amber-800">50%</span>
+            </p>
           </div>
         </div>
       </div>
