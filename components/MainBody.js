@@ -62,7 +62,7 @@ const MainBody = () => {
             <p className="text-xl text-black">
               Share Persentage :
               <span className="text-amber-800 pl-2">
-                {shareData[0]?.percentage}%
+                {shareData[0]?.percentage || 99}%
               </span>
             </p>
           </div>
@@ -78,7 +78,7 @@ const MainBody = () => {
             <p className="text-xl text-black">
               Share Persentage :
               <span className="text-amber-800 pl-2">
-                {shareData[1]?.percentage}%
+                {shareData[1]?.percentage || 1}%
               </span>
             </p>
           </div>
