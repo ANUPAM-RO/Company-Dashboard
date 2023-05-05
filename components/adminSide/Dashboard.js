@@ -8,6 +8,7 @@ const Dashboard = () => {
   const [memberData, setMemberData] = useState([]);
   const [projectData, setProjectData] = useState([]);
   const [shareData, setShareData] = useState([]);
+  const [fundData, setFundData] = useState([]);
 
   const router = useRouter();
 
@@ -29,6 +30,12 @@ const Dashboard = () => {
       setShareData(data);
     });
   };
+  const getFundData = async () => {
+    getDocs(collection(database, "fund")).then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      setFundData(data);
+    });
+  };
 
   const deleteMember = async (id) => {
     await deleteDoc(doc(database, "store member", id));
@@ -38,6 +45,7 @@ const Dashboard = () => {
     getMemberData();
     getProjectData();
     getShareData();
+    getFundData();
   }, [memberData, projectData]);
   return (
     <div>
@@ -54,6 +62,35 @@ const Dashboard = () => {
         <Link href="/adminPage/notification-add">
           <button className="btn btn-secondary">Add Notification</button>
         </Link>
+      </div>
+      <div className="overflow-x-auto">
+        <div className="text-center font-bold text-xl pb-4">Fund</div>
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Amount</th>
+              <th>EDIT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!!fundData.length &&
+              fundData?.map((s) => (
+                <tr className="" key={s.id}>
+                  <td>{s.id}</td>
+                  <td>{s.amount}</td>
+                  <td>
+                    <button
+                      className="btn bg-yellow-600 border-none hover:bg-yellow-500"
+                      onClick={() => router.push(`/adminPage/fund/${s.id}`)}
+                    >
+                      EDIT
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
       <div className="overflow-x-auto">
         <div className="text-center font-bold text-xl pb-4">Percentage</div>
@@ -74,7 +111,7 @@ const Dashboard = () => {
                   <td>
                     <button
                       className="btn bg-yellow-600 border-none hover:bg-yellow-500"
-                      onClick={() => router.push(`/adminPage//${s.id}`)}
+                      onClick={() => router.push(`/adminPage/${s.id}`)}
                     >
                       EDIT
                     </button>

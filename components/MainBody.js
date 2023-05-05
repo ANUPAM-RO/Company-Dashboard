@@ -8,6 +8,7 @@ const MainBody = () => {
   const [projectData, setProjectData] = useState([]);
   const [shareData, setShareData] = useState([]);
   const [message, setMessage] = useState([]);
+  const [fundData, setFundData] = useState([]);
 
   const getMemberData = async () => {
     getDocs(collection(database, "store member")).then((querySnapshot) => {
@@ -35,6 +36,12 @@ const MainBody = () => {
       }
     );
   };
+  const getFundData = async () => {
+    getDocs(collection(database, "fund")).then((querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => doc.data());
+      setFundData(data);
+    });
+  };
   const currentProjects = projectData?.filter(
     (data) => data?.project_Type === "current"
   );
@@ -46,6 +53,7 @@ const MainBody = () => {
     getProjectData();
     getShareData();
     getNotificationData();
+    getFundData();
   }, []);
   return (
     <div>
@@ -67,6 +75,9 @@ const MainBody = () => {
             </p>
           </div>
         </div>
+        <div className="ml-28 mt-14">
+          <input type="file" id="myFile" />
+        </div>
         <div className="card w-96 h-36 bg-white text-primary-content mr-2">
           <div className="card-body">
             <p className="text-xl text-black">
@@ -82,6 +93,19 @@ const MainBody = () => {
               </span>
             </p>
           </div>
+        </div>
+      </div>
+      <div className="text-2xl font-bold text-red-500 flex justify-center pb-4 pt-4">
+        Company Fund
+      </div>
+      <div className="card w-96 h-24 bg-white text-primary-content mr-2">
+        <div className="card-body">
+          <p className="text-xl text-black">
+            Amount :
+            <span className="text-green-800 font-bold pl-2">
+              {fundData[0]?.amount}
+            </span>
+          </p>
         </div>
       </div>
       <div className="text-2xl font-bold text-red-500 flex justify-center pb-4 pt-4">
