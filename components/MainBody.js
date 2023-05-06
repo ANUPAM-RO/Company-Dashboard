@@ -75,7 +75,7 @@ const MainBody = () => {
             </p>
           </div>
         </div>
-        <div className="ml-28 mt-14">
+        <div className="ml-36 mt-14">
           <input type="file" id="myFile" />
         </div>
         <div className="card w-96 h-36 bg-white text-primary-content mr-2">
@@ -98,14 +98,16 @@ const MainBody = () => {
       <div className="text-2xl font-bold text-red-500 flex justify-center pb-4 pt-4">
         Company Fund
       </div>
-      <div className="card w-96 h-24 bg-white text-primary-content mr-2">
-        <div className="card-body">
-          <p className="text-xl text-black">
-            Amount :
-            <span className="text-green-800 font-bold pl-2">
-              {fundData[0]?.amount}
-            </span>
-          </p>
+      <div className="flex justify-center">
+        <div className="card w-96 h-24 bg-white text-primary-content mr-2 ">
+          <div className="card-body">
+            <p className="text-xl text-black">
+              Amount :
+              <span className="text-green-800 font-bold pl-2">
+                {fundData[0]?.amount}
+              </span>
+            </p>
+          </div>
         </div>
       </div>
       <div className="text-2xl font-bold text-red-500 flex justify-center pb-4 pt-4">

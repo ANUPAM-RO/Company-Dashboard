@@ -3,7 +3,7 @@ import React from "react";
 const Nav = () => {
   return (
     <div className="navbar bg-primary text-neutral-content flex justify-center h-24 ">
-      <a className="btn btn-gh-ost normalcase text-3xl">
+      <a className="btn btn-gh-ost normalcase text-4xl">
         Indian <span className="text-orange-700 pl-2">Developer</span>
       </a>
     </div>
