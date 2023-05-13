@@ -1,9 +1,9 @@
 import { database } from "@/firebaseconfig";
 import { useRouter } from "next/router";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 
-const AddNotification = ({ shareData }) => {
+const AddNotification = () => {
   const [mesId, setMsgId] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
@@ -18,6 +18,7 @@ const AddNotification = ({ shareData }) => {
         console.log("store successfully");
         setMessage("");
         setMsgId("");
+        router.push("/adminPage");
       });
     } catch (error) {
       console.log(error);

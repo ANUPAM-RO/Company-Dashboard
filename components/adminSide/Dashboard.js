@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [projectData, setProjectData] = useState([]);
   const [shareData, setShareData] = useState([]);
   const [fundData, setFundData] = useState([]);
+  const [notificationData, setNotificationDate] = useState([]);
 
   const router = useRouter();
 
@@ -24,6 +25,16 @@ const Dashboard = () => {
       setProjectData(data);
     });
   };
+
+  const getNotificationData = async () => {
+    getDocs(collection(database, "store notification")).then(
+      (querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        setNotificationDate(data);
+      }
+    );
+  };
+
   const getShareData = async () => {
     getDocs(collection(database, "share percentage")).then((querySnapshot) => {
       const data = querySnapshot.docs.map((doc) => doc.data());
@@ -41,12 +52,17 @@ const Dashboard = () => {
     await deleteDoc(doc(database, "store member", id));
   };
 
+  const deleteNotification = async (id) => {
+    await deleteDoc(doc(database, "store notification", id));
+  };
+
   useEffect(() => {
     getMemberData();
     getProjectData();
+    getNotificationData();
     getShareData();
     getFundData();
-  }, [memberData, projectData]);
+  }, []);
   return (
     <div>
       <div className="text-3xl text-center font-bold text-green-700">
@@ -85,6 +101,35 @@ const Dashboard = () => {
                       onClick={() => router.push(`/adminPage/fund/${s.id}`)}
                     >
                       EDIT
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="overflow-x-auto">
+        <div className="text-center font-bold text-xl pb-4">Notification</div>
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Message</th>
+              <th>DELETE</th>
+            </tr>
+          </thead>
+          <tbody>
+            {!!notificationData.length &&
+              notificationData?.map((s) => (
+                <tr className="" key={s.member_Id}>
+                  <td>{s.message_Id}</td>
+                  <td>{s.message}</td>
+                  <td>
+                    <button
+                      className="btn bg-red-600 border-none hover:bg-red-500"
+                      onClick={() => deleteNotification(s.message_Id)}
+                    >
+                      DELETE
                     </button>
                   </td>
                 </tr>

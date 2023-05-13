@@ -93,9 +93,6 @@ const MainBody = () => {
           </div>
         </div>
       </div>
-      <div className="mt-14 mb-14 flex justify-center">
-        <input type="file" id="myFile" />
-      </div>
       <div className="text-2xl font-bold text-red-500 flex justify-center pb-4 pt-4">
         Company Fund
       </div>
